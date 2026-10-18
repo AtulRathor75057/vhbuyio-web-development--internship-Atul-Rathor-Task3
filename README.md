@@ -1,49 +1,33 @@
 # JobFlow — Modern Job Search & Application Tracker
 
-A responsive frontend-only multi-page SaaS-style demonstration built with **HTML, CSS, and vanilla JavaScript**. There is no server, authentication, or external API.
+A responsive, **frontend-only** job search and application management website built with **HTML5, CSS3 and vanilla JavaScript (ES6 modules)**. JobFlow demonstrates a SaaS-style interface using dynamically rendered mock jobs and browser-based storage—**no backend, database, API keys or build step required**.
 
-## Running locally
+> **Demo project:** Job listings, company details, statistics, and testimonials are sample content. Tracking an application does **not** submit it to an actual employer.
 
-1. Extract the ZIP and open a terminal in the `jobflow` folder.
-2. Start a static web server (ES modules require HTTP; opening HTML with `file://` may fail):
-   ```bash
-   python -m http.server 8000
-   ```
-3. Visit `http://localhost:8000/` in a browser.
+## Features
 
-Alternatively, use the **Live Server** extension in VS Code on `index.html`.
+| View | What you can do |
+| --- | --- |
+| **Home** (`index.html`) | Explore the landing page, featured jobs and companies, statistics, testimonials, and search bar. |
+| **Find Jobs** (`jobs.html`) | Search roles; filter by location, salary, experience and job type; sort listings; load more results. |
+| **Job Details** (`job-details.html?id=1`) | Read a role's description and requirements, view salary and location, save the job, or add it to your tracker. |
+| **Application Tracker** (`applications.html`) | Create, view, edit and delete applications; move cards through Applied, Screening, Interview, Offer and Rejected using drag-and-drop or mobile controls; export CSV. |
+| **Dashboard** (`dashboard.html`) | Review application metrics, weekly trends, pipeline stages, recent activity and interview countdowns. |
+| **Profile** (`profile.html`) | Edit profile details, skills and social links; see profile completion; select a resume file. |
+| **Settings** (`settings.html`) | Switch light/dark mode, import/export JSON data, clear local data and compare resume keywords with a job description. |
 
-## Pages and features
+Other interface features include responsive navigation, loading skeletons, empty states, feedback toasts and a **Ctrl+K / Cmd+K** command palette.
 
-| Page | Features |
-|---|---|
-| `index.html` | Landing hero, job search, featured roles/companies, stats, testimonial examples |
-| `jobs.html` | Dynamic job cards, debounced search, 4 filters, sorting, Load More, skeleton cards, empty states |
-| `job-details.html?id=1` | Details, skills, salary, company, bookmarking, track application modal; URL query parameter |
-| `applications.html` | Manual add/edit/delete, Kanban drag/drop, mobile status dropdown, CSV export |
-| `dashboard.html` | Live metrics, weekly chart, stage bars, activity log, upcoming interview countdown |
-| `profile.html` | Validated edit form, skills, social URLs, completion meter, resume filename selector |
-| `settings.html` | Theme, JSON backup/import, delete local data, resume/job keyword analyzer |
+## Tech stack
 
-**Global functionality:** Ctrl+K (or Cmd+K) opens an accessible command search modal. Keyboard users can navigate links and buttons. User actions show toast messages. Nav is responsive. Mock listings are generated from JavaScript arrays.
+- **HTML5** — semantic page structure
+- **CSS3** — CSS variables, Grid, Flexbox, transitions, responsive breakpoints and themes
+- **JavaScript (ES6+)** — modules, dynamic DOM rendering, events, array methods, URL parameters, filtering, sorting, debouncing, validation, CRUD and drag-and-drop
+- **localStorage** — local persistence of saved jobs, applications and user preferences
 
-## Data persistence
+## Project structure
 
-All changes are stored under the `jobflow-v1` localStorage key in the current browser. JSON export/import backs up the stored values. The resume file itself is **not** stored or uploaded; only its filename is retained. This is intentionally a frontend-only sample, and browser storage is not a secure home for sensitive information.
-
-## Try it
-
-1. Search for a role on the landing page and filter by location or salary in Jobs.
-2. Save a few roles, then view them on the Dashboard.
-3. Open a role, choose **Track application**, and save it.
-4. Drag the resulting card from Applied to Interview in the tracker (or use the card's dropdown on mobile).
-5. Open the card's `•••` menu and enter an interview date to see the Dashboard countdown.
-6. Update your Profile. Reload pages and verify the changes persist.
-7. Open Settings to export a backup or try the keyword analyzer.
-
-## Structure
-
-```
+```text
 jobflow/
 ├── index.html
 ├── jobs.html
@@ -63,22 +47,55 @@ jobflow/
 │   ├── storage.js
 │   ├── filters.js
 │   └── components.js
-├── assets/icons/
+├── assets/
+│   └── icons/
 └── README.md
 ```
 
-## JavaScript techniques demonstrated
+## Run locally
 
-ES modules, map/filter/sort/find, document DOM updates, delegated event handling, form validation, HTML dialogs, URLSearchParams, CSS variables, theme switching, keyboard commands, debouncing, drag/drop events, CRUD, localStorage, JSON import/export, CSV file creation, conditional rendering, responsive layouts, timer logic and basic text analysis.
+**Option A: VS Code Live Server (recommended)**
 
-## Notes and limitations
+1. Clone this repository or download its source files.
+2. Open the `jobflow` folder in VS Code (the folder containing `index.html`).
+3. Install/enable the **Live Server** extension if needed.
+4. Open `index.html` and click **Go Live**, or right-click and choose **Open with Live Server**.
+5. Your browser will open an address such as `http://127.0.0.1:5500/index.html` (the port may differ).
 
-* Job data, salary ranges, company names, testimonial names, and posting dates are **fictional demo content**, not live vacancies.
-* “Track application” does **not** send an application to an employer.
-* The analyzer is an approximate unique-word overlap tool, not an authoritative ATS score.
-* Browser localStorage is isolated by browser and origin and may be cleared; export JSON backups regularly.
-* Static hosting works on GitHub Pages, Netlify, Vercel, and similar platforms after deployment.
+**Option B: Python static server**
 
-## Deployment
+From the folder containing `index.html`, run:
 
-Push the extracted directory to a GitHub repository and enable GitHub Pages for the repository root. No build step is needed.
+```bash
+python -m http.server 8000
+```
+
+Then open `http://localhost:8000/`.
+
+**Important:** Serve this website over HTTP rather than opening the HTML file via `file://`, because it uses JavaScript modules.
+
+## Application workflow
+
+1. Start on the **Home** page and search for a job title or skill.
+2. Browse **Jobs**; apply search, filters and sorting.
+3. Open **Job Details** to review requirements and save a role.
+4. Choose **Track application** to add a job to the **Application Tracker**.
+5. Change stages as the hiring process progresses; edit or delete entries when needed.
+6. See updated stats and recent activity on the **Dashboard**.
+7. Update your **Profile** and configure appearance/data options in **Settings**.
+8. Refresh the website: data stored in your browser persists.
+
+## Browser storage and privacy
+
+The project stores app data in the browser's **localStorage**, using the `jobflow-v1` key. Data is **not synchronized between devices** and can be deleted when browser/site data is cleared. The resume picker records the **filename only**; no resume file is uploaded or stored. Avoid entering sensitive personal information into this demonstration. Use the JSON export option to back up your local data.
+
+## Limitations
+
+- No real job API, company authentication, email integration or backend database.
+- **Apply/Track** means managing a demo application record, not sending it to an employer.
+- Resume keyword matching is a basic text comparison, **not** an official ATS assessment.
+- Local browser data is device- and browser-specific; exported JSON backups must be kept separately.
+
+## Project purpose
+
+Created as a frontend development assignment for **VhBuyio Academy**, showcasing practical HTML, CSS, JavaScript and responsive user-interface development.
